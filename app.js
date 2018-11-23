@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 require('./auth/auth');
+const cors = require('cors');
 
 const config = require('./config/config');
 const db = config.db.url;
@@ -17,6 +18,8 @@ const foodRoutes = require('./routes/food');
 const testRoutes = require('./routes/test');
 const placeRoutes = require('./routes/place');
 
+const port = process.env.PORT || 2000;
+
 mongoose
   .connect(
     db,
@@ -29,6 +32,7 @@ mongoose
     console.log(msg.error(err));
   });
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', authRoutes);
@@ -48,6 +52,4 @@ app.use((err, req, res, info) => {
   res.status(err.status || 500).json(JSON.parse(errJsonString));
 });
 
-app.listen(3000, () =>
-  console.log('Listening on port 3000...key is ', config.test)
-);
+app.listen(port, () => console.log(`Listening on port ${port}...`));
