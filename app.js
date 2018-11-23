@@ -35,6 +35,10 @@ mongoose
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (req, res, next) => {
+  res.send('Server app status: 200 OK');
+});
+
 app.use('/', authRoutes);
 
 app.use('/', userRoutes);
