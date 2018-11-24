@@ -122,9 +122,10 @@ helperMethods.validateClientServerToken = token => {
 
 helperMethods.isUserAdmin = (req, res, next) => {
   if (req.user.username != 'admin')
-    return res
-      .status(403)
-      .send('User does not have privileges to access this page');
+    return res.status(403).json({
+      error: 'Authorization error',
+      message: 'User does not have privileges to access this page'
+    });
   return next();
 };
 
