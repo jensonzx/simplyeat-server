@@ -45,11 +45,14 @@ passport.use(
         // Find the user associated with the username
         const user = await User.findOne({ username });
 
+        if (!user) {
+          return done(null, false, { message: 'Invalid user credentials' });
+        }
         //Validate password and make sure it matches with the corresponding hash stored in the database
         //If the passwords match, it returns a value of true.
         const validate = await user.isValidPassword(password);
         // This method is more secure as it does not reveal whether the user exists in database or not
-        if (!(user && validate)) {
+        if (!validate) {
           return done(null, false, { message: 'Invalid user credentials' });
         }
 
