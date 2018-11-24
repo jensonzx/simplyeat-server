@@ -20,7 +20,7 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('login', { session: false }, (err, user, info) => {
     try {
       if (err || !user) {
-        const message = info.message || err || 'An error has occured';
+        const message = (info && info.message) || err || 'An error has occured';
         const error = new Error(message);
         return next(error);
       }
