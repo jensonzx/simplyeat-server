@@ -34,7 +34,7 @@ router.post('/login', (req, res, next) => {
         return res.json({ token, user: body });
       });
     } catch (err) {
-      return next(error);
+      return next(err);
     }
   })(req, res, next);
 });
