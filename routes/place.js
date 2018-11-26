@@ -33,7 +33,6 @@ const getRegion = async regionName => {
       key: apiKey,
       input: regionName,
       fields: 'name,geometry,formatted_address',
-      locationbias: 'ipbias',
       inputtype: 'textquery'
     }
   });
