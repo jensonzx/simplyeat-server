@@ -42,6 +42,7 @@ const getRegion = async regionName => {
 
   const result = axiosResult.data.candidates[0];
   const coordinates = result.geometry.location;
+  console.log(result);
 
   const region = await Place.create({
     placeId: result.place_id,
