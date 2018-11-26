@@ -145,17 +145,18 @@ router.get('/getrandomfoods', async (req, res, next) => {
   }
 });
 
-router.get('/getallfood', async (req, res, next) => {
-  try {
-    const idOnly = req.query.showonlyid;
-    const foodDocs = await Food.find().populate('types attributes');
-    const foods = !idOnly ? foodDocs : foodDocs.map(food => food.shortId);
+// Replaced with /getfoods
+// router.get('/getallfood', async (req, res, next) => {
+//   try {
+//     const idOnly = req.query.showonlyid;
+//     const foodDocs = await Food.find().populate('types attributes');
+//     const foods = !idOnly ? foodDocs : foodDocs.map(food => food.shortId);
 
-    return res.json(foods);
-  } catch (err) {
-    return next(err);
-  }
-});
+//     return res.json(foods);
+//   } catch (err) {
+//     return next(err);
+//   }
+// });
 
 router.get('/getfoodtypes', async (req, res, next) => {
   try {
