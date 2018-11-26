@@ -157,7 +157,7 @@ router.get('/getallfood', async (req, res, next) => {
   }
 });
 
-router.get('/getallfoodtype', async (req, res, next) => {
+router.get('/getfoodtypes', async (req, res, next) => {
   try {
     const types = await FoodType.find();
 
@@ -167,7 +167,7 @@ router.get('/getallfoodtype', async (req, res, next) => {
   }
 });
 
-router.get('/getallfoodattribute', async (req, res, next) => {
+router.get('/getfoodattributes', async (req, res, next) => {
   try {
     const attributes = await FoodAttribute.find();
 
