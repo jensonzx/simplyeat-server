@@ -45,7 +45,7 @@ const getRegion = async regionName => {
   console.log(result);
 
   const region = await Place.create({
-    placeId: result.place_id,
+    placeId: result.place_id || '',
     name: result.name,
     address: result.formatted_address,
     coordinates: {
