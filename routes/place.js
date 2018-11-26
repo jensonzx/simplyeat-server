@@ -23,9 +23,6 @@ const resolveApiErrorStatus = jsonData => {
 };
 
 const getRegion = async regionName => {
-  const regionDoc = await Place.findOne({ name: regionName });
-  if (regionDoc) return regionDoc;
-
   const geocodingUrl =
     'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
   const axiosResult = await axios.get(geocodingUrl, {
@@ -44,16 +41,12 @@ const getRegion = async regionName => {
   const coordinates = result.geometry.location;
   console.log(result);
 
-  const region = await Place.create({
-    placeId: result.place_id || '',
-    name: result.name,
-    address: result.formatted_address,
+  return {
     coordinates: {
       latitude: coordinates.lat,
       longitude: coordinates.lng
     }
-  });
-  return region;
+  };
 };
 
 // GET: /getplaces?food={food}&location={location}
