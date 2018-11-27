@@ -51,8 +51,11 @@ const getFoods = async (types, attributes) => {
     // types/attributes specified in query
     return (
       !qTypes ||
+      qTypes.length <= 0 ||
       food.types.some(type => qTypes.includes(type.shortId)) ||
-      (!qAttrs || food.types.some(attr => qAttrs.includes(attr.shortId)))
+      (!qAttrs ||
+        qTypes.length <= 0 ||
+        food.types.some(attr => qAttrs.includes(attr.shortId)))
     );
   });
 
@@ -137,6 +140,9 @@ router.get('/getrandomfoods', async (req, res, next) => {
     //     i++;
     //   }
     // }
+    if (foods.length < 1)
+      throw new Error('Length of filtered food is less than or equal to 0');
+
     const foodIndexes = await integerGenerator(limit, 0, foods.length - 1);
     const randomFoods = foodIndexes.map(foodIndex => foods[foodIndex]);
 
