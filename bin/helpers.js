@@ -19,7 +19,7 @@ helperMethods.integerGenerator = async (count, min, max) => {
   )
     throw new TypeError('All parameters must be a number type');
 
-  if (min === max) return max;
+  if (min === max) return [max];
 
   const url = 'https://www.random.org/integer-sets/';
   const axiosResult = await axios.get(url, {
