@@ -112,10 +112,7 @@ router.get('/getrandomfood', async (req, res, next) => {
       'types attributes'
     );
 
-    return res.json({
-      message: 'Successfully retrieved a randomly selected food from the list',
-      food: foodDoc
-    });
+    return res.json(foodDoc);
   } catch (error) {
     return next(error);
   }
