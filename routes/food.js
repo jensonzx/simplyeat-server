@@ -41,16 +41,17 @@ const jsonToArray = jsonStr => {
   }
 };
 
-const getFoods = async req => {
-  const qTypes = jsonToArray(req.query.types);
-  const qAttrs = jsonToArray(req.query.attributes);
+const getFoods = async (types, attributes) => {
+  const qTypes = jsonToArray(types);
+  const qAttrs = jsonToArray(attributes);
 
   const foodsDoc = await Food.find().populate('types attributes');
   const filterFoods = foodsDoc.filter(food => {
     // checks whether the types/attributes of food contains any of the
     // types/attributes specified in query
     return (
-      (!qTypes || food.types.some(type => qTypes.includes(type.shortId))) &&
+      !qTypes ||
+      food.types.some(type => qTypes.includes(type.shortId)) ||
       (!qAttrs || food.types.some(attr => qAttrs.includes(attr.shortId)))
     );
   });
@@ -86,7 +87,7 @@ router.get('/getfood', async (req, res, next) => {
 // GET: /getfoods?types={types}&attributes={attributes}
 router.get('/getfoods', async (req, res, next) => {
   try {
-    const foods = await getFoods(req);
+    const foods = await getFoods(req.query.types, req.query.attributes);
 
     return res.json(foods);
   } catch (err) {
@@ -121,7 +122,7 @@ router.get('/getrandomfood', async (req, res, next) => {
 router.get('/getrandomfoods', async (req, res, next) => {
   try {
     const maxLength = 8;
-    const foods = await getFoods(req);
+    const foods = await getFoods(req.query.types, req.query.attributes);
     // Get the limit to the random items it can generate ranging from 1 to length of foods array
     const limitQuery = parseInt(req.query.limit) || 1;
     const limit = !limitQuery
