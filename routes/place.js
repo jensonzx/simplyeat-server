@@ -49,6 +49,7 @@ const getRegion = async regionName => {
   };
 };
 
+// food: the full name of the food
 // GET: /getplaces?food={food}&location={location}
 router.get('/getplaces', async (req, res, next) => {
   try {
