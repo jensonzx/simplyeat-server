@@ -29,7 +29,7 @@ const getRegion = async regionName => {
     params: {
       key: apiKey,
       input: regionName,
-      fields: 'name,geometry,formatted_address',
+      fields: 'place_id,name,geometry,formatted_address',
       inputtype: 'textquery'
     }
   });

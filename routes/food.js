@@ -62,6 +62,17 @@ const getFoods = async (types, attributes) => {
   return filterFoods;
 };
 
+const getFoodsByName = async foodName => {
+  const foodsDoc = await Food.find().populate('types attributes');
+  const filterFoods = foodsDoc.filter(food => {
+    // checks whether the types/attributes of food contains any of the
+    // types/attributes specified in query
+    return food.name.includes(foodName);
+  });
+
+  return filterFoods;
+};
+
 // GET: /getfood?name={name} OR /getfood?id={shortId}
 router.get('/getfood', async (req, res, next) => {
   try {
@@ -87,12 +98,19 @@ router.get('/getfood', async (req, res, next) => {
   }
 });
 
-// GET: /getfoods?types={types}&attributes={attributes}
+// GET: /getfoods?types={types}&attributes={attributes} OR
+// GET: /getfoods?name={name}
 router.get('/getfoods', async (req, res, next) => {
   try {
-    const foods = await getFoods(req.query.types, req.query.attributes);
+    const name = req.query.name;
+    if (name) {
+      const foods = await getFoodsByName(name);
+      return res.json(foods);
+    } else {
+      const foods = await getFoods(req.query.types, req.query.attributes);
 
-    return res.json(foods);
+      return res.json(foods);
+    }
   } catch (err) {
     return next(err);
   }
